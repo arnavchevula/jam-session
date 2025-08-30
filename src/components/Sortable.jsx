@@ -20,6 +20,16 @@ import { SortableItem } from "./SortableItem";
 
 export function Sortable() {
   const [musicians, setMusicians] = useFetch();
+  const [selectedValues, setSelectedValues] = useState(
+    musicians && musicians.map(() => "")
+  );
+  console.log(selectedValues);
+
+  const handleSelectChange = (event, index) => {
+    const newSelectedValues = [...selectedValues];
+    newSelectedValues[index] = event.target.value;
+    setSelectedValues(newSelectedValues);
+  };
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -40,6 +50,8 @@ export function Sortable() {
         {musicians &&
           musicians.map(musician => (
             <SortableItem
+              handleSelectChange={handleSelectChange}
+              selectedValues={selectedValues}
               key={musician._id}
               id={musician._id}
               name={musician.name}

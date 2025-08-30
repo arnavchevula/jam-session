@@ -20,6 +20,9 @@ export function SortableItem(props) {
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <Musician
+        handleSelectChange={props.handleSelectChange}
+        id={props.id}
+        selectedValues={props.selectedValues}
         name={props.name}
         email={props.email}
         instagram={props.instagram}
