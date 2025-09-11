@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth");
 require("dotenv").config();
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json());
@@ -96,4 +96,20 @@ app.post("/add-musician", async (request, response) => {
   };
   const result = await myColl.insertOne(doc);
   response.send(status);
+});
+
+app.put("/update-musician", async (request, response) => {
+  console.log("update-musician");
+  await client.connect();
+  const myDB = client.db("jam-session");
+  const myColl = myDB.collection("musicians");
+  const { selectedValues } = request.body;
+  selectedValues.map(async musician => {
+    const result = await myColl.updateOne(
+      { _id: new ObjectId(musician.id) },
+      { $set: { status: musician.status } }
+    );
+    console.log(result);
+  });
+  response.send("success");
 });

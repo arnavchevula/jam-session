@@ -22,7 +22,7 @@ const Login = () => {
       );
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
-      navigate("/");
+      navigate("/jam-list");
     } catch (error) {
       console.error("Authentication failed:", error);
       setToken(null);

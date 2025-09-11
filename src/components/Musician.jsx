@@ -12,7 +12,7 @@ function Musician({
 }) {
   // const [status, setStatus] = useState("Pending");
   const handleStatus = e => {
-    console.log(name, status);
+    // console.log(name, status);
     // setStatus(e.target.value);
     handleSelectChange(e, id);
   };

@@ -20,15 +20,26 @@ import { SortableItem } from "./SortableItem";
 
 export function Sortable() {
   const [musicians, setMusicians] = useFetch();
-  const [selectedValues, setSelectedValues] = useState(
-    musicians && musicians.map(() => "")
-  );
-  console.log(selectedValues);
+  const [selectedValues, setSelectedValues] = useState([]);
 
   const handleSelectChange = (event, index) => {
     const newSelectedValues = [...selectedValues];
-    newSelectedValues[index] = event.target.value;
+    newSelectedValues.push({ id: index, status: event.target.value });
     setSelectedValues(newSelectedValues);
+  };
+
+  const handleSubmit = e => {
+    console.log(selectedValues);
+    axios
+      .put("http://localhost:3000/update-musician", {
+        selectedValues
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -62,6 +73,13 @@ export function Sortable() {
             />
           ))}
       </SortableContext>
+      <button
+        onClick={handleSubmit}
+        type="submit"
+        className="py-3 px-12 bg-teal-500 hover:bg-teal-600 mr-5 rounded-full text-white text-lg focus:outline-none w-full"
+      >
+        Lock In!
+      </button>
     </DndContext>
   );
 

@@ -9,15 +9,7 @@ function Home() {
   const [phoneNum, setPhoneNum] = useState("");
   const [instrument, setInstrument] = useState("");
   const [musicians, setMusicians] = useState([]);
-
-  useEffect(() => {
-    const getMusicians = async () => {
-      const response = await axios.get("http://localhost:3000/musicians");
-      setMusicians(response.data);
-    };
-
-    getMusicians().catch(console.error);
-  }, []);
+  const status = "Pending";
   const handleSubmit = async e => {
     e.preventDefault();
     console.log(name, email, instagram, phoneNum, instrument);
@@ -27,7 +19,8 @@ function Home() {
         email,
         instagram,
         phoneNum,
-        instrument
+        instrument,
+        status
       })
       .then(function(response) {
         console.log(response);
@@ -152,12 +145,6 @@ function Home() {
             </button>
           </form>
         </div>
-
-        <div className="w-full mx-auto lg:w-1/2  px-2">
-          <Sortable musicians={musicians} />
-        </div>
-        {/* <Registration /> */}
-        {/* <Login /> */}
       </section>
     </>
   );
